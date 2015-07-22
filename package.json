@@ -1,0 +1,18 @@
+{
+  "name": "tsredux",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.4.3",
+    "awesome-typescript-loader": "^0.7.1",
+    "redux": "^0.12.0",
+    "typescript": "^1.5.3",
+    "webpack": "^1.10.2"
+  }
+}
