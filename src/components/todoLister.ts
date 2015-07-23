@@ -15,7 +15,9 @@ export default function todoAdder() {
 
 
 class TodoListerController {
+  
   todos;
+  
   constructor(private reduxStore: redux.Store) {
     reduxStore.subscribe(this.onStoreChanged.bind(this));
   }
