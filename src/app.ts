@@ -3,7 +3,8 @@ import todoAdder from './components/todoAdder';
 import todoLister from './components/todoLister';
 import todoActionsService from './actions/todoActions';
 declare var require;
-var redux = require('redux');
+import redux = require('redux');
+
 
 angular.module('app', [])
   .factory('reduxStore', () => {

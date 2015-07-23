@@ -1,13 +1,14 @@
-import * as actionCreators from '../actions/todoActions';
+import {TodoState} from '../reducers/todo';
 declare var require;
-var redux = require('redux');
+import redux = require('redux');
+import jquery = require('jquery');
 
 export default function todoAdder() {
   return {
     restrict: 'E',
     controllerAs: 'vm',
     controller: TodoListerController,
-    template: "<div ng-repeat='todo in vm.todos'>{{todo.get('text')}}</div>",
+    template: "<div ng-repeat='todo in vm.todos'>{{todo.text}}</div>",
     scope: {}
   };
 }
@@ -15,12 +16,15 @@ export default function todoAdder() {
 
 class TodoListerController {
   todos;
-  constructor(private reduxStore) {
+  constructor(private reduxStore: redux.Store) {
     reduxStore.subscribe(this.onStoreChanged.bind(this));
   }
 
+ //decorator to inject mutable state
+ //this.reduxStore.getState().todoReducer needs to be directly injected
+ 
   onStoreChanged() {
-    console.log(this.reduxStore.getState());
-    this.todos = this.reduxStore.getState().todoReducer.get('todos');
+    let todoReducerState: TodoState = this.reduxStore.getState().todoReducer    
+    this.todos = jquery.extend(true, {}, todoReducerState.todos);
   }
 }

@@ -1,3 +1,6 @@
+import {ITodoActionCreators} from '../actions/ITodoActionCreators';
+import redux = require('redux');
+
 export default function todoAdder() {
   return {
     restrict: 'E',
@@ -11,11 +14,15 @@ export default function todoAdder() {
 
 class TodoAdderController {
   id = 0;
-  constructor(private todoActions, private reduxStore) {
+  constructor(private todoActions: ITodoActionCreators, private reduxStore: redux.Store) {
   }
   
   click() {
     this.todoActions.addTodo('test' + this.id++);
-   // this.reduxStore.getState().todoReducer.todos.push('FROM CONTROLLER' + this.id++);
+    
+    
+    //simple test to ensure data immutability
+   /* let state = this.reduxStore.getState().todoReducer;
+    state.todos.push({text: 'from controller', id: 45});    */
   }  
 }
