@@ -14,15 +14,10 @@ export default function todoAdder() {
 
 class TodoAdderController {
   id = 0;
-  constructor(private todoActions: ITodoActionCreators, private reduxStore: redux.Store) {
+  constructor(private todoActions: ITodoActionCreators) {
   }
   
   click() {
-    this.todoActions.addTodo('test' + this.id++);
-    
-    
-    //simple test to ensure data immutability
-   /* let state = this.reduxStore.getState().todoReducer;
-    state.todos.push({text: 'from controller', id: 45});    */
+    this.todoActions.addTodo('test' + this.id++);  
   }  
 }

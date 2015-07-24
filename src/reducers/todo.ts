@@ -9,12 +9,17 @@ export interface IAction {
   payload: any;
 }
 
+
+interface Todo {
+  text: string;
+  id: number;
+}
 export interface TodoState {
-  todos: { text: string, id: number }[];
+  todos: Todo[];
   idCounter: number;
 }
 
-let initialState: TodoState = deepFreeze({ todos: [], idCounter: 0 });
+let initialState: TodoState = deepFreeze(<TodoState>{ todos: [], idCounter: 0 });
 
 /*decorator to swap parameters, to allow default value for state + copy and deepFreeze*/
 
@@ -22,10 +27,11 @@ export default function todoReducer(state: TodoState, action: IAction): TodoStat
   if (!state) {
     state = initialState;
   }
+
   switch (action.type) {
-    case ADD_TODO:      
+    case ADD_TODO:
       let newState: TodoState = jquery.extend(true, {}, state);
-      newState.todos.push({ text: action.payload, id: state.idCounter });
+      newState.todos.push(<Todo>{ text: action.payload, id: state.idCounter });
       newState.idCounter = state.idCounter + 1;
       deepFreeze(newState)
       return newState;

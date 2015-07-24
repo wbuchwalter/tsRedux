@@ -1,14 +1,26 @@
 import * as types from '../constants/actionTypes'
+declare var require;
+var redux = require('redux');
 
-export function addTodo(text: string) {
-  return {
-    type: types.ADD_TODO,
-    text
-  };
+export interface ITodoActionCreator {
+  addTodo(text: string): void;
+  removeTodo(id: number): void;
 }
 
-export function deleteTodo(id) {
-   return {
-    type: types.REMOVE_TODO   
-  };
+let actionCreator = <ITodoActionCreator>{
+  addTodo(text: string) {
+    return {
+      type: types.ADD_TODO,
+      payload: text
+    };
+  },
+  removeTodo(id) {
+    return {
+      type: types.REMOVE_TODO
+    };
+  }
+};
+
+export default function todoActionsService(reduxStore): ITodoActionCreator {
+  return redux.bindActionCreators(actionCreator, reduxStore.dispatch);
 }

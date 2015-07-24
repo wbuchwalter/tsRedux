@@ -27,7 +27,7 @@ declare module "redux" {
     function createStore(
         reducer: Reducer | Object,
         initialState?: any
-    ): Store;
+    ): Store;      
 
     function bindActionCreators<T>(
         actionCreators: ActionCreator | ActionCreators,
@@ -36,5 +36,6 @@ declare module "redux" {
 
     function composeMiddleware(...middlewares: Array<Function>): Function;
     function combineReducers(reducers: Object): Reducer;
+    function applyMiddleware(middleware: Function): 
 
 }
