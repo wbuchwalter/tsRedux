@@ -1,9 +1,5 @@
-import {Action} from './action';
+import {Action, AsyncAction} from './action';
 
-export interface AsyncAction {
-  promise: ng.IPromise<any>;
-  types: string[];
-}
 
 
 export default function promiseMiddleware(next: Function) {
