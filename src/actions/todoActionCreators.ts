@@ -1,4 +1,7 @@
 import * as types from '../constants/actionTypes'
+import {AsyncAction} from '../redux/promiseMiddleware';
+import {Action} from '../redux/action';
+
 declare var require;
 var redux = require('redux');
 
@@ -7,20 +10,26 @@ export interface ITodoActionCreator {
   removeTodo(id: number): void;
 }
 
-let actionCreator = <ITodoActionCreator>{
-  addTodo(text: string) {
-    return {
-      type: types.ADD_TODO,
-      payload: text
-    };
-  },
-  removeTodo(id) {
-    return {
-      type: types.REMOVE_TODO
-    };
-  }
-};
+export default function todoActionsService(reduxStore, $q: ng.IQService): ITodoActionCreator {
+  let actionCreator = <ITodoActionCreator>{
+    addTodo(text: string) {
+      let deferred = $q.defer();
 
-export default function todoActionsService(reduxStore): ITodoActionCreator {
+      setTimeout(() => {
+          console.log('resolved');
+          deferred.resolve(text);
+      }, 1000);
+
+      return <AsyncAction>{
+        types: types.ADD_TODO_ASYNC_TYPES,   
+        promise: deferred.promise        
+      };
+    },
+    removeTodo(id) {
+      return <Action>{
+        type: types.REMOVE_TODO
+      };
+    }
+  };
   return redux.bindActionCreators(actionCreator, reduxStore.dispatch);
 }

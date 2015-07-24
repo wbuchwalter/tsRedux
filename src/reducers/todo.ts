@@ -1,4 +1,4 @@
-import {ADD_TODO, REMOVE_TODO} from '../constants/actionTypes';
+import {ADD_TODO_ASYNC_TYPES, REMOVE_TODO} from '../constants/actionTypes';
 declare var require;
 import Immutable = require('immutable');
 import jquery = require('jquery');
@@ -23,13 +23,13 @@ let initialState: TodoState = deepFreeze(<TodoState>{ todos: [], idCounter: 0 })
 
 /*decorator to swap parameters, to allow default value for state + copy and deepFreeze*/
 
-export default function todoReducer(state: TodoState, action: IAction): TodoState {
+export function todoReducer(state: TodoState, action: IAction): TodoState {
   if (!state) {
     state = initialState;
   }
 
   switch (action.type) {
-    case ADD_TODO:
+    case ADD_TODO_ASYNC_TYPES[1]:
       let newState: TodoState = jquery.extend(true, {}, state);
       newState.todos.push(<Todo>{ text: action.payload, id: state.idCounter });
       newState.idCounter = state.idCounter + 1;

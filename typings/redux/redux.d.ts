@@ -36,6 +36,6 @@ declare module "redux" {
 
     function composeMiddleware(...middlewares: Array<Function>): Function;
     function combineReducers(reducers: Object): Reducer;
-    function applyMiddleware(middleware: Function): 
+    function applyMiddleware(...middleware: Function[]): 
 
 }

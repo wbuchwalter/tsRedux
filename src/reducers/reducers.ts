@@ -1,1 +1,1 @@
-export {default as todoReducer} from './todo';
+export {todoReducer} from './todo';
