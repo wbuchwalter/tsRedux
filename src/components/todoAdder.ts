@@ -15,12 +15,13 @@ class TodoAdderController {
   id = 0;
   constructor(private todoActions: ITodoActionCreator) {
   }
-  
+
   add() {
-    this.todoActions.addTodo('test' + this.id++);  
-  }  
-  
-  addAsync() {
-    this.todoActions.addTodoAsync('test' + this.id++);  
+    this.todoActions.addTodo('test' + this.id++);
   }
+
+  addAsync() {
+    this.todoActions.removeTodo(this.id);
+  }
+
 }

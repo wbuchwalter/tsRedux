@@ -18,15 +18,14 @@ class TodoListerController {
   
   todos;
   
-  constructor(private reduxStore: redux.Store) {
-    reduxStore.subscribe(this.onStoreChanged.bind(this));
+  constructor(private reduxStore: redux.Store, reduxConnector) {
+    reduxConnector.connect(reduxStore, 'todoReducer', this.onStoreChanged.bind(this));
   }
 
  //decorator to inject mutable state
  //this.reduxStore.getState().todoReducer needs to be directly injected
  
-  onStoreChanged() {
-    let todoReducerState: TodoState = this.reduxStore.getState().todoReducer    
-    this.todos = jquery.extend(true, {}, todoReducerState.todos);
+  onStoreChanged(newState: TodoState) {
+    this.todos = newState.todos;
   }
 }

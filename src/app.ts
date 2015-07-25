@@ -4,12 +4,13 @@ import todoLister from './components/todoLister';
 import todoActionsService from './actions/todoActionCreators';
 import promiseMiddleware from './redux/promiseMiddleware';
 import loggingMiddleware from './redux/loggingMiddleware';
+import ngConnector from './redux/connectorFactory';
 
 declare var require;
 import redux = require('redux');
 
 
-angular.module('app', [])
+angular.module('app', [ngConnector.name])
   .factory('reduxStore', () => {
     let reducer = redux.combineReducers(reducers);
     return redux.applyMiddleware(promiseMiddleware, loggingMiddleware)(redux.createStore)(reducer);  
