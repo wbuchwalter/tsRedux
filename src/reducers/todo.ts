@@ -1,64 +1,33 @@
-import {ADD_TODO, ADD_TODO_ASYNC_TYPES, REMOVE_TODO} from '../constants/actionTypes';
-declare var require;
-import Immutable = require('immutable');
-import jquery = require('jquery');
-
-
-export interface IAction {
-  type: string;
-  payload: any;
-}
+import {ADD_TODO, REMOVE_TODO} from '../constants/actionTypes';
+import {BaseReducer} from '../redux/baseReducer';
+import {handleAction} from '../redux/annotations';
 
 
 interface Todo {
   text: string;
   id: number;
 }
+
 export interface TodoState {
   todos: Todo[];
   idCounter: number;
 }
 
-let initialState: TodoState = deepFreeze(<TodoState>{ todos: [], idCounter: 0 });
 
-/*decorator to swap parameters, to allow default value for state + copy and deepFreeze*/
+class TodoReducer extends BaseReducer {
+  private _initialState: TodoState = <TodoState>{ todos: [], idCounter: 0 };
 
-export function todoReducer(state: TodoState, action: IAction): TodoState {
-  if (!state) {
-    state = initialState;
+  @handleAction(ADD_TODO)
+  onAddTodo(state, action) {
+    state.todos.push(<Todo>{ text: action.payload, id: state.idCounter });
+    state.idCounter = state.idCounter + 1;
+    return state;
   }
 
-  switch (action.type) {
-    case ADD_TODO:
-      return addTodo(state, action);
-    default:
-      return state;
-  }
-}
-
-function addTodo(state, action) {
-  let newState: TodoState = jquery.extend(true, {}, state);
-  newState.todos.push(<Todo>{ text: action.payload, id: state.idCounter });
-  newState.idCounter = state.idCounter + 1;
-  deepFreeze(newState)
-  return newState;
+  @handleAction(REMOVE_TODO)
+  onRemoveTodo(state, action) { return state; };
 }
 
 
-
-function deepFreeze(obj) {
-  var prop, propKey;
-  Object.freeze(obj); // First freeze the object.
-  for (propKey in obj) {
-    prop = obj[propKey];
-    if (!obj.hasOwnProperty(propKey) || !(typeof prop === 'object') || Object.isFrozen(prop)) {
-      // If the object is on the prototype, not an object, or is already frozen,
-      // skip it. Note that this might leave an unfrozen reference somewhere in the
-      // object if there is an already frozen object containing an unfrozen object.
-      continue;
-    }
-
-    deepFreeze(prop); // Recursively call deepFreeze.
-  }
-  return obj;
-}
+let todoReducerInstance = new TodoReducer();
+export let todoReducer = todoReducerInstance.handleAction.bind(todoReducerInstance);
