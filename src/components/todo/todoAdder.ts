@@ -1,4 +1,4 @@
-import {ITodoActionCreator} from '../actions/todoActionCreators';
+import {ITodoActionCreator} from '../../actions/todoActionCreators';
 import redux = require('redux');
 
 export default function todoAdder() {

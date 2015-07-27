@@ -1,6 +1,6 @@
 import * as reducers from './reducers/reducers';
-import todoAdder from './components/todoAdder';
-import todoLister from './components/todoLister';
+import todoAdder from './components/todo/todoAdder';
+import todoLister from './components/todo/todoLister';
 import todoActionsService from './actions/todoActionCreators';
 import promiseMiddleware from './redux/promiseMiddleware';
 import loggingMiddleware from './redux/loggingMiddleware';

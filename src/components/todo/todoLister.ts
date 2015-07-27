@@ -1,4 +1,4 @@
-import {TodoState} from '../reducers/todo';
+import {TodoState} from '../../reducers/todo';
 declare var require;
 import redux = require('redux');
 import jquery = require('jquery');
