@@ -1,2 +1,2 @@
 # tsRedux
-Typescript + Redux experiment
+Typescript + Redux + Angular experiment 
