@@ -4,12 +4,12 @@ export default angular.module('ngReduxConnector', [])
   .factory('reduxConnector', function() {
     return {
       connect: function(redux, reducerName, callback) {
-        var currentState = redux.getState()[reducerName];
+        var currentState = angular.copy(redux.getState()[reducerName]);
         redux.subscribe(function() {
           var nextState = redux.getState()[reducerName];
           if (!shallowEqual(currentState, nextState)) {
             callback(nextState);
-            currentState = nextState;
+            currentState = angular.copy(nextState);
           }
         });
       }

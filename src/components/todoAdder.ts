@@ -17,11 +17,11 @@ class TodoAdderController {
   }
 
   add() {
-    this.todoActions.addTodo('test' + this.id++);
+    this.todoActions.addTodo('todo' + this.id++);
   }
 
   addAsync() {
-    this.todoActions.removeTodo(this.id);
+    this.todoActions.addTodoAsync('todo' + this.id++);
   }
 
 }

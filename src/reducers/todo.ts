@@ -13,9 +13,8 @@ export interface TodoState {
   idCounter: number;
 }
 
-
 class TodoReducer extends BaseReducer {
-  private _initialState: TodoState = <TodoState>{ todos: [], idCounter: 0 };
+  private _initialState: TodoState = <TodoState>{ todos: <Todo[]>[], idCounter: 0 };
 
   @handleAction(ADD_TODO)
   onAddTodo(state, action) {

@@ -22,7 +22,7 @@ export class BaseReducer {
     //needs to throw compile time error if _initialState is not defined in the derived class.
     //returns the state as immutable.
     //return state ? this.deepFreeze(state) : this.deepFreeze((<any>this)._initialState);
-    return state ? state : (<any>this)._initialState, {});
+    return state ? state : (<any>this)._initialState;
   }
 
   getActionHandlersMap(): any {
