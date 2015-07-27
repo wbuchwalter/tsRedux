@@ -4,20 +4,18 @@ export default angular.module('ngReduxConnector', [])
   .factory('reduxConnector', function() {
     return {
       connect: function(redux, reducerName, callback) {
-        var currentState = angular.merge({}, redux.getState()[reducerName]);
+        var currentState = redux.getState()[reducerName];
         redux.subscribe(function() {
           var nextState = redux.getState()[reducerName];
-            console.log('checking new state');
-         
           if (!shallowEqual(currentState, nextState)) {
-            console.log('state changed');
             callback(nextState);
-            currentState = angular.merge({}, nextState);
+            currentState = nextState;
           }
         });
       }
     }
   });
+
 
 function shallowEqual(objA, objB) {
   if (objA === objB) {
