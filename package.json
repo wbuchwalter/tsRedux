@@ -12,7 +12,9 @@
     "angular": "^1.4.3",
     "awesome-typescript-loader": "^0.7.1",
     "jquery": "^2.1.4",
+    "lodash": "^3.10.0",
     "redux": "^1.0.0-rc",
+    "reflect-metadata": "^0.1.0",
     "typescript": "^1.5.3",
     "webpack": "^1.10.2"
   }
