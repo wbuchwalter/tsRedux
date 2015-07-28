@@ -9,16 +9,17 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, './build'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    hash: true
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),   
+    new HtmlWebpackPlugin({
+      title: 'tsRedux',
+      template: './index.html',
+      inject: 'body'      
+    }),
+    new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
     new webpack.HotModuleReplacementPlugin()
-    //  new HtmlWebpackPlugin({
-    //   title: 'tsRedux',
-    //   inject: true,
-    //   template: 'index.html'
-    // })
   ],
 
   resolve: {
@@ -27,13 +28,13 @@ module.exports = {
 
   devtool: 'source-map',
 
-  module: {   
+  module: {
     loaders: [
-      { test: /\.ts$/, loader: 'simple-typescript' },    
+      { test: /\.ts$/, loader: 'simple-typescript' },
       { test: /\.html$/, loader: 'html' },
       { test: /rules.json/, loader: 'raw' },
       { test: /\.json$/, loader: 'json' }
     ]
   }
-  
+
 };

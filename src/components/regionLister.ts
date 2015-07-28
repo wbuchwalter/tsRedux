@@ -1,6 +1,6 @@
 import {RegionState, Region} from '../reducers/region';
 import {IConnector} from '../redux/connector';
-import {authorizeRegionsSelector, AuthorizedRegionsSelectorData} from '../selectors/authorizedRegions';
+import {matchingRegionsSelector} from '../selectors/matchingRegions';
 
 export default function regionLoader() {
   return {
@@ -16,10 +16,10 @@ class RegionLoaderController {
   regions: Region[];
   
   constructor(reduxConnector: IConnector<RegionState>) {
-    reduxConnector.connect(authorizeRegionsSelector, this.onStateChanged.bind(this));
+    reduxConnector.connect(matchingRegionsSelector, this.onStateChanged.bind(this));
   }
 
-  onStateChanged(data: AuthorizedRegionsSelectorData) {
-    this.regions = data.regionList;
+  onStateChanged(regions: Region[]) {
+    this.regions = regions;
   }
 }

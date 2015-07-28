@@ -1,6 +1,6 @@
 import {BaseReducer} from '../redux/baseReducer';
 import {handleAction} from '../redux/annotations';
-import {LOAD_REGIONS} from '../constants/actionTypes';
+import {LOAD_REGIONS, FILTER_REGIONS} from '../constants/actionTypes';
 
 export interface Region {
   //actual id in the array
@@ -17,16 +17,23 @@ export interface Region {
 export interface RegionState {
   regionList: Region[];
   selectedRegionId: number;
+  filter: string;
 }
 
 
 class RegionReducer extends BaseReducer {
-  private _initialState = <RegionState>{ regionList: [], selectedRegionId: undefined };
+  private _initialState = <RegionState>{ regionList: [], selectedRegionId: undefined, filter: undefined };
 
   @handleAction(LOAD_REGIONS)
   private _onRegionsLoaded(state: RegionState, action): RegionState {
     state.regionList = this.normalizeTree(action.payload);
     state.selectedRegionId = undefined;
+    return state;
+  }
+
+  @handleAction(FILTER_REGIONS)
+  private _onFilterRegions(state: RegionState, action): RegionState {
+    state.filter = action.payload;
     return state;
   }
    

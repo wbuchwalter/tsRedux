@@ -1,4 +1,5 @@
-export const LOAD_REGIONS = 'LOAD_NODES';
-export const SELECT_REGION = 'SELECT_NODE';
+export const LOAD_REGIONS = 'LOAD_REGIONS';
+export const SELECT_REGION = 'SELECT_REGION';
+export const FILTER_REGIONS = 'FILTER_REGIONS';
 
 export const LOAD_PERMISSIONS = 'LOAD_PERMISSIONS';

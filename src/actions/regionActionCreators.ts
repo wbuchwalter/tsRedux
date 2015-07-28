@@ -6,6 +6,7 @@ var redux = require('redux');
 export interface IRegionActionCreator {
   loadRegionsAsync();
   selectRegion(regionId: string);
+  filterRegions(searchTerm: string);
 }
 
 export default function regionActionsService(reduxStore, $q: ng.IQService): IRegionActionCreator {
@@ -15,6 +16,9 @@ export default function regionActionsService(reduxStore, $q: ng.IQService): IReg
     },
     selectRegion: (regionId) => {
       return createAction(types.SELECT_REGION, regionId);
+    },
+    filterRegions: (searchTerm) => {
+      return createAction(types.FILTER_REGIONS, searchTerm);
     }
   };
   return redux.bindActionCreators(actionCreator, reduxStore.dispatch);

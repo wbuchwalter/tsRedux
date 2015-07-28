@@ -6,6 +6,7 @@ import loggingMiddleware from './redux/loggingMiddleware';
 import ngConnector from './redux/connector';
 import regionLister from './components/regionLister';
 import loader from './components/loader';
+import regionFilter from './components/regionFilter';
 
 
 declare var require;
@@ -20,6 +21,7 @@ angular.module('app', [ngConnector.name])
    .factory('regionActions', regionActionsService)
    .factory('permissionActions', permissionActionsService)
    .directive('tsrLoader', loader)
-   .directive('tsrRegionLister', regionLister);
+   .directive('tsrRegionLister', regionLister)
+   .directive('tsrRegionFilter', regionFilter);
    
  
