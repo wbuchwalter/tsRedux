@@ -1,2 +1,2 @@
-export {todoReducer} from './todo';
-export {noopReducer} from './noop';
+export {permissions} from './permission';
+export {regions} from './region';

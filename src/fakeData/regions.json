@@ -1,0 +1,133 @@
+{  
+  "id":"Global",
+  "name":"Global", 
+  "children":[  
+    {  
+      "id":"America",
+      "name":"America",  
+      "children":[],
+      "parentId":"Global",
+      "isActive":false
+    }, 
+    {  
+      "id":"Japan",
+      "type":"Sale",
+      "name": "Japan",    
+      "children":[  
+        {  
+          "id":"Tokyo",
+          "type":"Sale",
+          "name":"Tokyo",          
+          "children":[],
+          "parentId":"Japan",         
+          "isActive":false       
+        }
+      ],
+      "parentId":"Global",    
+      "isActive":false
+    },
+    {  
+      "id":"Monaco",
+      "type":"Sale",
+      "name": "Monaco", 
+      "children":[],
+      "parentId":"Global",    
+      "isActive":false
+    },    
+    {  
+      "id":"World",
+      "type":"Virtual",
+      "name": "World",  
+      "children":[  
+        {  
+          "id":"APAC",
+          "type":"Virtual",
+          "name": "APAC", 
+          "children":[  
+            {  
+              "id":"Australia",
+              "type":"Sale",
+              "name": "Australia",              
+              "children":[],
+              "parentId":"APAC",           
+              "isActive":true
+            }
+          ],
+          "parentId":"World",       
+          "isActive":true
+        },
+        {  
+          "id":"Europe",
+          "type":"Virtual",
+          "name": "Europe",       
+          "children":[  
+            {  
+              "id":"France",
+              "type":"Sale",
+              "name": "France",             
+              "children":[],
+              "parentId":"Europe",            
+              "isActive":true
+            }
+          ],
+          "parentId":"World",          
+          "isActive":true
+        },
+        {  
+          "id":"NorthAmerica",
+          "type":"Virtual",
+          "name": "North America",        
+          "children":[  
+            {  
+              "id":"Canada",
+              "type":"Sale",
+              "name":"Canada",             
+              "children":[  
+                {  
+                  "id":"Ontario",
+                  "type":"Dependant",
+                  "name": "Ontario",              
+                  "children":[],
+                  "parentId":"Canada",                
+                  "isActive":true
+                },
+                {  
+                  "id":"Quebec",
+                  "type":"Dependant",
+                  "name": "Quebec",
+                  "children":[],
+                  "parentId":"Canada",               
+                  "isActive":true
+                },
+                {  
+                  "id":"Yukon",
+                  "type":"Dependant",
+                  "name":"Yukon",
+                  "children":[],
+                  "parentId":"Canada",               
+                  "isActive":true
+                }
+              ],
+              "parentId":"NorthAmerica",             
+              "isActive":true
+            },
+            {  
+              "id":"USA",
+              "type":"Sale",
+              "name":"United States of America",
+              "children":[],
+              "parentId":"NorthAmerica",            
+              "isActive":true
+            }
+          ],
+          "parentId":"World",         
+          "isActive":true
+        }
+      ],
+      "parentId":"Global",     
+      "isActive":true
+    } 
+  
+  ],
+  "isActive":true
+}

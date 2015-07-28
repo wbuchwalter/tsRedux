@@ -1,10 +1,12 @@
 import * as reducers from './reducers/reducers';
-import todoAdder from './components/todoAdder';
-import todoLister from './components/todoLister';
-import todoActionsService from './actions/todoActionCreators';
+import regionActionsService from './actions/regionActionCreators';
+import permissionActionsService from './actions/permissionActionCreators';
 import promiseMiddleware from './redux/promiseMiddleware';
 import loggingMiddleware from './redux/loggingMiddleware';
-import ngConnector from './redux/connectorFactory';
+import ngConnector from './redux/connector';
+import regionLister from './components/regionLister';
+import loader from './components/loader';
+
 
 declare var require;
 import redux = require('redux');
@@ -14,8 +16,10 @@ angular.module('app', [ngConnector.name])
   .factory('reduxStore', () => {
     let reducer = redux.combineReducers(reducers);
     return redux.applyMiddleware(promiseMiddleware, loggingMiddleware)(redux.createStore)(reducer);  
-  })
-   .factory('todoActions', todoActionsService)
-   .directive('todoAdder', todoAdder)
-   .directive('todoLister', todoLister);
+  })  
+   .factory('regionActions', regionActionsService)
+   .factory('permissionActions', permissionActionsService)
+   .directive('tsrLoader', loader)
+   .directive('tsrRegionLister', regionLister);
+   
  

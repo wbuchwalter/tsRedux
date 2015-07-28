@@ -32,7 +32,7 @@ module.exports = {
       { test: /\.ts$/, loader: 'simple-typescript' },    
       { test: /\.html$/, loader: 'html' },
       { test: /rules.json/, loader: 'raw' },
-      { test: /data.json/, loader: 'json' }
+      { test: /\.json$/, loader: 'json' }
     ]
   }
   
