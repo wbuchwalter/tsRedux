@@ -13,11 +13,11 @@ export default function todoAdder() {
 
 class TodoAdderController {
   id = 0;
-  constructor(private todoActions: ITodoActionCreator) {
+  constructor(private todoActions: ITodoActionCreator, private nodeActions) {
   }
 
   add() {
-    this.todoActions.addTodo('todo' + this.id++);
+    this.nodeActions.loadNodesAsync();
   }
 
   addAsync() {

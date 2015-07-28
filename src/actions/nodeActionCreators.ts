@@ -23,7 +23,7 @@ export default function nodeActionsService(reduxStore, $q: ng.IQService): INodeA
 function fakeHttpCall( $q: ng.IQService): ng.IPromise<any> {
   let deferred = $q.defer();
   setTimeout(() => {  
-    deferred.resolve(require('./fakeData.json'));
+    deferred.resolve(require('../fakeData.json'));
   }, 100);
   return deferred.promise;
 }
