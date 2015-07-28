@@ -1,2 +1,2 @@
-export {permissionReducer} from './permission';
-export {regionReducer} from './region';
+export {permissions} from './permission';
+export {regions} from './region';

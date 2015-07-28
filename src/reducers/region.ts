@@ -15,17 +15,17 @@ export interface Region {
 }
 
 export interface RegionState {
-  regions: Region[];
+  regionList: Region[];
   selectedRegionId: number;
 }
 
 
 class RegionReducer extends BaseReducer {
-  private _initialState = <RegionState>{ regions: [], selectedRegionId: undefined };
+  private _initialState = <RegionState>{ regionList: [], selectedRegionId: undefined };
 
   @handleAction(LOAD_REGIONS)
   private _onRegionsLoaded(state: RegionState, action): RegionState {
-    state.regions = this.normalizeTree(action.payload);
+    state.regionList = this.normalizeTree(action.payload);
     state.selectedRegionId = undefined;
     return state;
   }
@@ -63,5 +63,5 @@ class RegionReducer extends BaseReducer {
 
 }
 
-let regionReducerInstance = new RegionReducer();
-export let regionReducer = regionReducerInstance.handleAction.bind(regionReducerInstance);
+let regionReducer = new RegionReducer();
+export let regions = regionReducer.handleAction.bind(regionReducer);

@@ -22,3 +22,6 @@ class PermissionReducer extends BaseReducer {
     });
   }
 }
+
+let permissionReducer = new PermissionReducer();
+export let permissions = permissionReducer.handleAction.bind(permissionReducer);

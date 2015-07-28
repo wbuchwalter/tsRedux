@@ -3,7 +3,7 @@ import regionActionsService from './actions/regionActionCreators';
 import permissionActionsService from './actions/permissionActionCreators';
 import promiseMiddleware from './redux/promiseMiddleware';
 import loggingMiddleware from './redux/loggingMiddleware';
-import ngConnector from './redux/connectorFactory';
+import ngConnector from './redux/connector';
 import regionLister from './components/regionLister';
 import loader from './components/loader';
 

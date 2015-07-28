@@ -1,9 +1,5 @@
 import {RegionState, Region} from '../reducers/region';
-
-declare var require;
-import redux = require('redux');
-import jquery = require('jquery');
-
+import {IConnector} from '../redux/connector';
 export default function regionLoader() {
   return {
     restrict: 'E',
@@ -15,15 +11,14 @@ export default function regionLoader() {
 }
 
 
-class RegionLoaderController {  
-  
+class RegionLoaderController {    
   regions: Region[];
   
-  constructor(private reduxStore: redux.Store, reduxConnector) {
-    reduxConnector.connect(reduxStore, 'regionReducer', this.onStateChanged.bind(this));
+  constructor(reduxConnector: IConnector<RegionState>) {
+    reduxConnector.connect(state => state.regions, this.onStateChanged.bind(this));
   }
 
   onStateChanged(newState: RegionState) {
-    this.regions = newState.regions;
+    this.regions = newState.regionList;
   }
 }
