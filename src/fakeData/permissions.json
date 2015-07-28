@@ -1,7 +1,7 @@
 {
   "name": "J. Doe",
   "permissions": [
-    "Japan/Administrator",
+    "Tokyo/Administrator",
     "*/User"
   ]
 }
