@@ -5,11 +5,15 @@ declare module Redux {
   }
 
   interface ActionCreators {
-    [key: string]: ActionCreator
+    [key: string]: ActionCreator;
   }
 
   interface Reducer extends Function {
     (state: any, action: any): any;
+  }
+  
+  interface Reducers {
+    [key: string]: Reducer;
   }
   
   interface Dispatch extends Function {
@@ -30,7 +34,6 @@ declare module Redux {
     (obj: MiddlewareArg): Function;
   }
 
-
   class Store {
     getReducer(): Reducer;
     replaceReducer(nextReducer: Reducer): void;
@@ -40,13 +43,11 @@ declare module Redux {
   }
 
   function createStore(reducer: Reducer, initialState?: any): Store;
-  function bindActionCreators<T>(actionCreators: ActionCreator | ActionCreators, dispatch: Function): T;
-  function composeMiddleware(...middlewares: any[]): Function;
-  function combineReducers(reducers: any): Reducer;
+  function bindActionCreators<T>(actionCreators: ActionCreators, dispatch: Dispatch): T;
+  function combineReducers(reducers: Reducers): Reducer;
   function applyMiddleware(...middleware: Middleware[]): Function;
-
 }
 
 declare module "redux" {
   export = Redux;
-};
+}
