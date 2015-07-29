@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-     "start": "webpack && webpack-dev-server --content-base build/ --hot"
+    "start": "webpack && webpack-dev-server --content-base build/ --hot"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +16,7 @@
     "lodash": "^3.10.0",
     "redux": "^1.0.0-rc",
     "reflect-metadata": "^0.1.0",
+    "reselect": "0.0.2",
     "typescript": "^1.5.3",
     "webpack": "^1.10.2"
   }
