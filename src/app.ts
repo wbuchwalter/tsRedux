@@ -7,9 +7,6 @@ import ngConnector from './redux/connector';
 import regionLister from './components/regionLister';
 import loader from './components/loader';
 import regionFilter from './components/regionFilter';
-
-
-declare var require;
 import redux = require('redux');
 
 

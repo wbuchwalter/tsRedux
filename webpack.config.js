@@ -5,7 +5,7 @@ var path = require('path');
 module.exports = {
   entry: {
     app: ['webpack/hot/dev-server', './src/app.ts'],
-    vendor: ['angular', 'reflect-metadata', 'lodash']
+    vendor: ['jquery', 'angular', 'reflect-metadata', 'lodash', 'redux', 'reselect']
   },
   output: {
     path: path.join(__dirname, './build'),

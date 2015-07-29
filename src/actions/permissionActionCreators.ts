@@ -1,7 +1,6 @@
 import * as types from '../constants/actionTypes';
 import {createAsyncAction} from '../redux/action';
-declare var require;
-var redux = require('redux');
+import redux = require('redux');
 
 export interface IPermissionActionCreator {
   loadPermissionsAsync();
