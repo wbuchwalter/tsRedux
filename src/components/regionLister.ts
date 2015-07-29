@@ -1,5 +1,4 @@
 import {RegionState, Region} from '../reducers/region';
-import {IConnector} from '../redux/connector';
 import {matchingRegionsSelector} from '../selectors/matchingRegions';
 
 export default function regionLoader() {
@@ -15,7 +14,7 @@ export default function regionLoader() {
 class RegionLoaderController {    
   regions: Region[];
   
-  constructor(reduxConnector: IConnector<RegionState>) {
+  constructor(reduxConnector) {
     reduxConnector.connect(matchingRegionsSelector, this.onStateChanged.bind(this));
   }
 
