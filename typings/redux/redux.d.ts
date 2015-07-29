@@ -1,41 +1,52 @@
-declare module "redux" {
-    interface ActionCreator {
-        (...args: Array<any>): Object;
-    }
+declare module Redux {
+  
+  interface ActionCreator extends Function {
+    (...args: any[]): any;
+  }
 
-    interface ActionCreators {
-        [key: string]: ActionCreator
-    }
+  interface ActionCreators {
+    [key: string]: ActionCreator
+  }
 
-    interface Reducer {
-        (state: any, action: Object): any;
-    }
+  interface Reducer extends Function {
+    (state: any, action: any): any;
+  }
+  
+  interface Dispatch extends Function {
+    (action: any): any;
+  }
 
-    interface StoreMethods {
-        dispatch(action: Object): Object;
-        getState(): Object;
+  interface StoreMethods {
+    dispatch: Dispatch;
+    getState(): any;
+  }
+  
+  interface MiddlewareArg {
+    dispatch: Dispatch;
+    getState: Function;
+  }
+  
+  interface Middleware extends Function {
+    (obj: MiddlewareArg): Function;
+  }
 
-    }
-    class Store {
-        getReducer(): Function;
-        replaceReducer(nextReducer: Reducer): void;
-        dispatch(action: Object): Object;
-        getState(): any;
-        subscribe(listener: Function): Function;
-    }
 
-    function createStore(
-        reducer: Reducer | Object,
-        initialState?: any
-    ): Store;      
+  class Store {
+    getReducer(): Reducer;
+    replaceReducer(nextReducer: Reducer): void;
+    dispatch(action: any): any;
+    getState(): any;
+    subscribe(listener: Function): Function;
+  }
 
-    function bindActionCreators<T>(
-        actionCreators: ActionCreator | ActionCreators,
-        dispatch: Function
-    ): T;
-
-    function composeMiddleware(...middlewares: Array<Function>): Function;
-    function combineReducers(reducers: Object): Reducer;
-    function applyMiddleware(...middleware: Function[]): 
+  function createStore(reducer: Reducer, initialState?: any): Store;
+  function bindActionCreators<T>(actionCreators: ActionCreator | ActionCreators, dispatch: Function): T;
+  function composeMiddleware(...middlewares: any[]): Function;
+  function combineReducers(reducers: any): Reducer;
+  function applyMiddleware(...middleware: Middleware[]): Function;
 
 }
+
+declare module "redux" {
+  export = Redux;
+};

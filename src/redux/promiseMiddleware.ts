@@ -2,7 +2,7 @@ import {Action, AsyncAction} from './action';
 
 
 
-export default function promiseMiddleware(next: Function) {
+export default function promiseMiddleware() {
 
   return (next) => (asyncAction: AsyncAction) => {
     const { promise, types} = asyncAction;

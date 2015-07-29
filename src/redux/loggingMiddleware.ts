@@ -1,5 +1,5 @@
 
-export default function loggingMiddleware(next) {
+export default function loggingMiddleware() {
   return (next) => (action) => {
     if(action.promise) {
       console.log(action.types);
