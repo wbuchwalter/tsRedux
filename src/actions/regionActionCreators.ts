@@ -8,7 +8,7 @@ export interface IRegionActionCreator {
   filterRegions(searchTerm: string);
 }
 
-export default function regionActionsService(reduxStore, $q: ng.IQService): IRegionActionCreator {
+export default function regionActionsService($ngRedux, $q: ng.IQService): IRegionActionCreator {
   let actionCreator = <IRegionActionCreator>{
     loadRegionsAsync: () => {
       return createAsyncAction(types.LOAD_REGIONS, fakeHttpCall($q));
@@ -20,7 +20,7 @@ export default function regionActionsService(reduxStore, $q: ng.IQService): IReg
       return createAction(types.FILTER_REGIONS, searchTerm);
     }
   };
-  return redux.bindActionCreators(actionCreator, reduxStore.dispatch);
+  return redux.bindActionCreators(actionCreator, $ngRedux.getStore().dispatch);
 }
 
 function fakeHttpCall( $q: ng.IQService): ng.IPromise<any> {

@@ -11,10 +11,15 @@ import ngRedux = require('ng-redux');
 
 
 angular.module('app', [ngRedux.name])
-  .factory('reduxStore', () => {
+  .config(($ngReduxProvider) => {
+    let reducer = redux.combineReducers(reducers);
+    let store = redux.applyMiddleware(promiseMiddleware, loggingMiddleware)(redux.createStore)(reducer);  
+    $ngReduxProvider.setReduxStore(store);
+  })
+  /*.factory('reduxStore', () => {
     let reducer = redux.combineReducers(reducers);
     return redux.applyMiddleware(promiseMiddleware, loggingMiddleware)(redux.createStore)(reducer);  
-  })  
+  }) */ 
    .factory('regionActions', regionActionsService)
    .factory('permissionActions', permissionActionsService)
    .directive('tsrLoader', loader)

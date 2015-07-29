@@ -7,13 +7,13 @@ export interface IPermissionActionCreator {
 }
 
 
-export default function permissionActionsService(reduxStore, $q: ng.IQService): IPermissionActionCreator {
+export default function permissionActionsService($ngRedux, $q: ng.IQService): IPermissionActionCreator {
   let actionCreator = <IPermissionActionCreator>{
     loadPermissionsAsync: () => {
       return createAsyncAction(types.LOAD_PERMISSIONS, fakeHttpCall($q));
     }
   };
-  return redux.bindActionCreators(actionCreator, reduxStore.dispatch);
+  return redux.bindActionCreators(actionCreator, $ngRedux.getStore().dispatch);
 }
 
 
