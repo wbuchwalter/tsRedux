@@ -4,17 +4,9 @@ declare module Redux {
     (...args: any[]): any;
   }
 
-  interface ActionCreators {
-    [key: string]: ActionCreator;
-  }
-
   interface Reducer extends Function {
     (state: any, action: any): any;
-  }
-  
-  interface Reducers {
-    [key: string]: Reducer;
-  }
+  } 
   
   interface Dispatch extends Function {
     (action: any): any;
@@ -23,7 +15,8 @@ declare module Redux {
   interface StoreMethods {
     dispatch: Dispatch;
     getState(): any;
-  }
+  }  
+  
   
   interface MiddlewareArg {
     dispatch: Dispatch;
@@ -43,8 +36,8 @@ declare module Redux {
   }
 
   function createStore(reducer: Reducer, initialState?: any): Store;
-  function bindActionCreators<T>(actionCreators: ActionCreators, dispatch: Dispatch): T;
-  function combineReducers(reducers: Reducers): Reducer;
+  function bindActionCreators<T>(actionCreators: any, dispatch: Dispatch): T;
+  function combineReducers(reducers: any): Reducer;
   function applyMiddleware(...middleware: Middleware[]): Function;
 }
 
