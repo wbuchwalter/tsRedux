@@ -26,7 +26,7 @@ class RegionReducer extends BaseReducer {
 
   @handleAction(LOAD_REGIONS)
   private _onRegionsLoaded(state: RegionState, action): RegionState {
-    state.regionList = this.normalizeTree(action.payload);
+    state.regionList = this.normalizeTree(action.payload);  
     state.selectedRegionId = undefined;
     return state;
   }
@@ -38,10 +38,11 @@ class RegionReducer extends BaseReducer {
   }
    
   //depth first normalization 
-  normalizeTree(rawData: any): Region[] {
+  normalizeTree(rawData: any): any {
     let position = 0;
+    let regionsMap = {};
 
-    let normalizer = (rawData, parentId?: number) => {
+    let normalize = (rawData, parentId?: number) => {
       let region: Region = {
         id: position++,
         uid: rawData.id,
@@ -51,20 +52,19 @@ class RegionReducer extends BaseReducer {
         isActive: rawData.isActive
       };
 
-      let regions = [region];
+      regionsMap[region.id] = region;
+      if (parentId >= 0) {
+        regionsMap[parentId].childrenIds.push(region.id);
+      }
 
       if (rawData.children) {
-        for (let child of rawData.children) {
-          let childNodes = normalizer(child);
-          childNodes[0].parentId = region.id;
-          region.childrenIds.push(childNodes[0].id)
-          regions = regions.concat(childNodes);
-        }
+        _.forEach(rawData.children, (c) => {
+          normalize(c, region.id);
+        });
       }
-      return regions;
     };
-
-    return normalizer(rawData);
+    normalize(rawData)
+    return regionsMap;
 
   }
 

@@ -20,5 +20,3 @@ angular.module('app', [ngRedux.name])
    .directive('tsrLoader', loader)
    .directive('tsrRegionLister', regionLister)
    .directive('tsrRegionFilter', regionFilter);
-   
- 

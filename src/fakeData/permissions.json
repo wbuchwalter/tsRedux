@@ -1,7 +1,6 @@
 {
   "name": "J. Doe",
   "permissions": [
-    "Monaco/Administrator",
-    "World/User"
+    "*/Administrator"    
   ]
 }

@@ -4,9 +4,9 @@ import {authorizedRegionsSelector} from './authorizedRegions';
 
 export const matchingRegionsSelector = reselect.createSelector(
   [authorizedRegionsSelector, state => state.regions.filter],
-  (regions: Region[], filter) => {
-    return filter
-      ? _.filter(regions, (r: Region) => { return r.name.toLowerCase().indexOf(filter.toLowerCase()) > -1; })
+  (regions, filter) => {
+      return filter 
+      ? _.filter(regions, r => r.name.toLowerCase().indexOf(filter.toLowerCase()) > -1)
       : regions;
   });
 
