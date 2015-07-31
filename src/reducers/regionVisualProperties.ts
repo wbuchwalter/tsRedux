@@ -7,7 +7,6 @@ export interface RegionVisualProperties {
   depth: number;
   isExpanded: boolean;
   isExpandable: boolean;
-  isVisible: boolean;
 }
 
 export interface RegionVisualPropertiesMap {
@@ -45,7 +44,6 @@ class RegionVisualPropertiesReducer extends BaseReducer {
         depth: depth,
         isExpandable: false,
         isExpanded: false,
-        isVisible: true
       };
       regionsMap[properties.regionId] = properties;
       if (rawData.children) {

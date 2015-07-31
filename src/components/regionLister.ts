@@ -17,31 +17,50 @@ class RegionListerController {
 
   regionMap: RegionMap;
   regionUIMap: RegionVisualPropertiesMap;
-  regionIds: string[];
+  visibleRegionIds: string[] = [];
 
   constructor(reduxConnector, private regionActions: IRegionActionCreator) {
     reduxConnector.connect(state => state.regions.regionMap, regionMap => this.regionMap = regionMap);
     reduxConnector.connect(state => state.regionsVisualProperties.map, regionUIMap => this.regionUIMap = regionUIMap);
-    reduxConnector.connect(matchingRegionsSelector, regionIds => this.regionIds = regionIds);
+    reduxConnector.connect(matchingRegionsSelector, this.onMatchingRegionsChanged.bind(this));
   }
-  
+
   getRegion = id => this.regionMap[id];
   isExpandable = id => this.regionUIMap[id].isExpandable;
-  //isVisible = id => this.regionUIMap[id].isVisible;
+  isExpanded = id => this.regionUIMap[id].isExpanded;
   getLeftMargin = id => this.regionUIMap[id].depth * 20;
+  isVisible = id => !this.anyCollapsedParent(id);
   toggle = id => this.regionActions.toggleRegion(id);
-  
-  isVisible(id) {
-    return !this.anyCollapsedParent(id);
-  }
-  
+  select = id => this.regionActions.selectRegion(id);
+
+
   anyCollapsedParent(regionId): boolean {
     let region = this.regionMap[regionId];
-    if(!region.parentId) {
+    if (!region.parentId) {
       return false;
-    }    
-    return this.regionUIMap[region.parentId].isExpanded 
-    ? this.anyCollapsedParent(region.parentId) 
-    : true;    
+    }
+    return this.regionUIMap[region.parentId].isExpanded
+      ? this.anyCollapsedParent(region.parentId)
+      : true;
   }
+
+  onMatchingRegionsChanged(matchingRegionIds: string[]) {
+    //we don't want to just show the matching regions, we want to show their full hierarchy
+    this.visibleRegionIds.length = 0;
+    _.forEach(matchingRegionIds, id => this.addHierarchy(id, this.visibleRegionIds))
+  }
+
+
+  addHierarchy(regionId, idList) {
+    //add parent first
+    let region = this.regionMap[regionId];
+    if (region.parentId) {
+      this.addHierarchy(region.parentId, idList);
+    }
+
+    if (!_.any(idList, id => id === regionId)) {
+      idList.push(regionId);
+    }
+  }
+
 }
