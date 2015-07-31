@@ -10,7 +10,7 @@ export class BaseReducer {
     this._actionHandlersMap = this.getActionHandlersMap();
   }
   
-  handleAction(state, action) {
+  handleActions(state, action) {
     _.forOwn(this._actionHandlersMap, (handledActionTypes: string[], handlerKey: string) => {
       if (this.actionTypeMatchMetadata(action.type, handledActionTypes)) {
         //pass the state as mutable and returns it as immutable

@@ -1,12 +1,12 @@
 <div 
-  ng-show='vm.isVisible(region)' 
-  ng-click='vm.expand(region)' 
-  ng-repeat='region in vm.regions'
-  ng-style="{'margin-left': vm.getLeftMargin(region) + 'px'}">
+  ng-repeat='regionId in vm.regionIds'  
+  ng-show='vm.isVisible(regionId)' 
+  ng-click='vm.toggle(regionId)' 
+  ng-style="{'margin-left': vm.getLeftMargin(regionId) + 'px'}">
     <div 
       style='float: left'
-      ng-show='vm.isExpandable(region)'>
+      ng-show='vm.isExpandable(regionId)'>
         +
     </div>
-    <div >{{region.name}}</div>
+    <div >{{vm.getRegion(regionId).name}}</div>
 </div>

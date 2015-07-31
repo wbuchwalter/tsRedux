@@ -2,31 +2,35 @@ import {BaseReducer} from '../redux/baseReducer';
 import {handleAction} from '../redux/annotations';
 import {LOAD_REGIONS, FILTER_REGIONS} from '../constants/actionTypes';
 
-export interface Region {
-  //actual id in the array
-  id: number;
-  
-  //primary key backend
-  uid: string
+export interface Region {  
+  //primary key 
+  id: string
   name: string;
+  depth: number; //depth in the tree, calculated in the reducer for performance and conveniance
   childrenIds: number[];
-  parentId: number;
+  parentId: string;
   isActive: boolean;
 }
 
+export interface RegionMap {
+  [regionId: string]: Region
+}
+
 export interface RegionState {
-  regionList: Region[];
+  regionIds: string[];
+  regionMap: RegionMap;
   selectedRegionId: number;
   filter: string;
 }
 
-
 class RegionReducer extends BaseReducer {
-  private _initialState = <RegionState>{ regionList: [], selectedRegionId: undefined, filter: undefined };
-
+  private _initialState = <RegionState>{ regionIds: [], regionMap: {}, selectedRegionId: undefined, filter: undefined };
+ 
   @handleAction(LOAD_REGIONS)
   private _onRegionsLoaded(state: RegionState, action): RegionState {
-    state.regionList = this.normalizeTree(action.payload);  
+    state.regionMap = this.normalizeTree(action.payload);  
+    state.regionIds = [];
+    _.forIn(state.regionMap, r => state.regionIds.push(r.id));
     state.selectedRegionId = undefined;
     return state;
   }
@@ -39,36 +43,35 @@ class RegionReducer extends BaseReducer {
    
   //depth first normalization 
   normalizeTree(rawData: any): any {
-    let position = 0;
+   
     let regionsMap = {};
-
-    let normalize = (rawData, parentId?: number) => {
-      let region: Region = {
-        id: position++,
-        uid: rawData.id,
+    
+    let normalize = (rawData, depth: number, parentId?: string) => {
+      let region: Region = {       
+        id: rawData.id,       
         name: rawData.name,
         childrenIds: [],
         parentId: parentId,
+        depth: depth,
         isActive: rawData.isActive
       };
 
       regionsMap[region.id] = region;
-      if (parentId >= 0) {
+      if (parentId) {
         regionsMap[parentId].childrenIds.push(region.id);
       }
 
       if (rawData.children) {
         _.forEach(rawData.children, (c) => {
-          normalize(c, region.id);
+          normalize(c, depth + 1, region.id);
         });
       }
     };
-    normalize(rawData)
+    normalize(rawData, 0)
     return regionsMap;
-
   }
 
 }
 
 let regionReducer = new RegionReducer();
-export let regions = regionReducer.handleAction.bind(regionReducer);
+export let regions = regionReducer.handleActions.bind(regionReducer);

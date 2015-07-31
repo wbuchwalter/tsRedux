@@ -3,7 +3,7 @@ import {handleAction} from '../redux/annotations';
 import {LOAD_PERMISSIONS} from '../constants/actionTypes';
 
 export interface PermissionState {
-  authorizedRegionUids: string[];
+  authorizedRegionIds: string[];
 }
 
 
@@ -12,11 +12,11 @@ class PermissionReducer extends BaseReducer {
 
   @handleAction(LOAD_PERMISSIONS)
   onPermissionsLoaded(state: PermissionState, action): PermissionState {
-    state.authorizedRegionUids = this.extractAuthorizedRegionsUids(action.payload)
+    state.authorizedRegionIds = this.extractAuthorizedRegionsIds(action.payload)
     return state;
   }
 
-  extractAuthorizedRegionsUids(rawData): string[] {
+  extractAuthorizedRegionsIds(rawData): string[] {
    return _.map(rawData.permissions, (p) => {
       return p.split('/')[0];
     });
@@ -24,4 +24,4 @@ class PermissionReducer extends BaseReducer {
 }
 
 let permissionReducer = new PermissionReducer();
-export let permissions = permissionReducer.handleAction.bind(permissionReducer);
+export let permissions = permissionReducer.handleActions.bind(permissionReducer);

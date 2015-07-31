@@ -1,54 +1,47 @@
-import {RegionState, Region} from '../reducers/region';
+import {RegionState, Region, RegionMap} from '../reducers/region';
+import {RegionVisualProperties, RegionVisualPropertiesMap} from '../reducers/regionVisualProperties'
 import {matchingRegionsSelector} from '../selectors/matchingRegions';
-import {regionUIDepthSelector} from '../selectors/regionsDepth';
 import {IRegionActionCreator} from '../actions/regionActionCreators';
 
 export default function regionLoader() {
   return {
     restrict: 'E',
     controllerAs: 'vm',
-    controller: RegionLoaderController,
+    controller: RegionListerController,
     template: require('./regionLister.html'),
     scope: {}
   };
 }
 
-class RegionLoaderController {
-  regions;
-  depthMap;
-  expandedRegionsMap = {};
+class RegionListerController {
+
+  regionMap: RegionMap;
+  regionUIMap: RegionVisualPropertiesMap;
+  regionIds: string[];
 
   constructor(reduxConnector, private regionActions: IRegionActionCreator) {
-    reduxConnector.connect(matchingRegionsSelector, this.onStateChanged.bind(this));
-    reduxConnector.connect(regionUIDepthSelector, this.onDepthChanged.bind(this));
-  }
-
-  onStateChanged(regions: any) {
-    this.regions = regions;
-    this.expandedRegionsMap[0] = true; //top most state is always expanded 
-  }
-
-  onDepthChanged(depthMap) {
-    this.depthMap = depthMap;
-  }
-
-  getLeftMargin(region) {
-    return this.depthMap[region.id] * 20;
-  }
-
-  isVisible(region) {
-    return region.parentId >= 0
-      ? this.expandedRegionsMap[region.parentId]
-      : true;
+    reduxConnector.connect(state => state.regions.regionMap, regionMap => this.regionMap = regionMap);
+    reduxConnector.connect(state => state.regionsVisualProperties.map, regionUIMap => this.regionUIMap = regionUIMap);
+    reduxConnector.connect(matchingRegionsSelector, regionIds => this.regionIds = regionIds);
   }
   
-  isExpandable(region) {
-    return region.childrenIds && region.childrenIds.length > 0;
+  getRegion = id => this.regionMap[id];
+  isExpandable = id => this.regionUIMap[id].isExpandable;
+  //isVisible = id => this.regionUIMap[id].isVisible;
+  getLeftMargin = id => this.regionUIMap[id].depth * 20;
+  toggle = id => this.regionActions.toggleRegion(id);
+  
+  isVisible(id) {
+    return !this.anyCollapsedParent(id);
   }
-
-  expand(region) {
-    this.expandedRegionsMap[region.id] 
-    ? this.expandedRegionsMap[region.id] = false 
-    : this.expandedRegionsMap[region.id] = true;
+  
+  anyCollapsedParent(regionId): boolean {
+    let region = this.regionMap[regionId];
+    if(!region.parentId) {
+      return false;
+    }    
+    return this.regionUIMap[region.parentId].isExpanded 
+    ? this.anyCollapsedParent(region.parentId) 
+    : true;    
   }
 }

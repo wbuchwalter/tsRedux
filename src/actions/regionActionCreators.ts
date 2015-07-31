@@ -6,19 +6,15 @@ export interface IRegionActionCreator {
   loadRegionsAsync();
   selectRegion(regionId: string);
   filterRegions(searchTerm: string);
+  toggleRegion(id: string);
 }
 
 export default function regionActionsService($ngRedux, $q: ng.IQService): IRegionActionCreator {
   let actionCreator = <IRegionActionCreator>{
-    loadRegionsAsync: () => {
-      return createAsyncAction(types.LOAD_REGIONS, fakeHttpCall($q));
-    },
-    selectRegion: (regionId) => {
-      return createAction(types.SELECT_REGION, regionId);
-    },
-    filterRegions: (searchTerm) => {
-      return createAction(types.FILTER_REGIONS, searchTerm);
-    }
+    loadRegionsAsync: () => createAsyncAction(types.LOAD_REGIONS, fakeHttpCall($q)),
+    selectRegion: regionId => createAction(types.SELECT_REGION, regionId),
+    filterRegions: searchTerm => createAction(types.FILTER_REGIONS, searchTerm),
+    toggleRegion: regionId => createAction(types.TOGGLE_REGION, regionId)
   };
   return redux.bindActionCreators(actionCreator, $ngRedux.getStore().dispatch);
 }
