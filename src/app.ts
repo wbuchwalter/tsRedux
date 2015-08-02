@@ -7,9 +7,9 @@ import regionLister from './components/regionLister';
 import loader from './components/loader';
 import regionFilter from './components/regionFilter';
 import redux = require('redux');
-import ngRedux = require('ng-redux');
+require('ng-redux');
 
-angular.module('app', [ngRedux.name])
+angular.module('app', ['ngRedux'])
   .config(($ngReduxProvider) => {
     let reducer = redux.combineReducers(reducers);
     let store = redux.applyMiddleware(promiseMiddleware, loggingMiddleware)(redux.createStore)(reducer);  
