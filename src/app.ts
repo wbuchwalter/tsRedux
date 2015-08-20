@@ -12,11 +12,14 @@ require('ng-redux');
 angular.module('app', ['ngRedux'])
   .config(($ngReduxProvider) => {
     let reducer = redux.combineReducers(reducers);
-    let store = redux.applyMiddleware(promiseMiddleware, loggingMiddleware)(redux.createStore)(reducer);  
-    $ngReduxProvider.setReduxStore(store);
+    $ngReduxProvider.createStoreWith(reducer, ['promiseMiddleware', loggingMiddleware]);
   })
    .factory('regionActions', regionActionsService)
    .factory('permissionActions', permissionActionsService)
+   .factory('promiseMiddleware', ($http) => {
+      console.log($http);
+      return promiseMiddleware;
+    })
    .directive('tsrLoader', loader)
    .directive('tsrRegionLister', regionLister)
    .directive('tsrRegionFilter', regionFilter);

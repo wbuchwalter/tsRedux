@@ -19,10 +19,10 @@ class RegionListerController {
   regionUIMap: RegionVisualPropertiesMap;
   visibleRegionIds: string[] = [];
 
-  constructor(reduxConnector, private regionActions: IRegionActionCreator) {
-    reduxConnector.connect(state => state.regions.regionMap, regionMap => this.regionMap = regionMap);
-    reduxConnector.connect(state => state.regionsVisualProperties.map, regionUIMap => this.regionUIMap = regionUIMap);
-    reduxConnector.connect(matchingRegionsSelector, this.onMatchingRegionsChanged.bind(this));
+  constructor($ngRedux, private regionActions: IRegionActionCreator) {
+    $ngRedux.connect(state => state.regions.regionMap, regionMap => this.regionMap = regionMap);
+    $ngRedux.connect(state => state.regionsVisualProperties.map, regionUIMap => this.regionUIMap = regionUIMap);
+    $ngRedux.connect(matchingRegionsSelector, this.onMatchingRegionsChanged.bind(this));
   }
 
   getRegion = id => this.regionMap[id];
