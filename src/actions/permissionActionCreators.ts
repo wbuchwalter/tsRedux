@@ -13,7 +13,7 @@ export default function permissionActionsService($ngRedux, $q: ng.IQService): IP
       return createAsyncAction(types.LOAD_PERMISSIONS, fakeHttpCall($q));
     }
   };
-  return redux.bindActionCreators(actionCreator, $ngRedux.getStore().dispatch);
+  return redux.bindActionCreators(actionCreator, $ngRedux.dispatch);
 }
 
 

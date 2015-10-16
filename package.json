@@ -14,11 +14,11 @@
     "jquery": "^2.1.4",
     "json-loader": "^0.5.2",
     "lodash": "^3.10.0",
-    "ng-redux": "^0.2.0",
-    "redux": "^1.0.0-rc",
+    "ng-redux": "^3.0.2",
+    "redux": "^3.0.0",
     "reflect-metadata": "^0.1.0",
-    "reselect": "0.0.2",
-    "typescript": "^1.5.3",
+    "reselect": "^2.0.0",
+    "typescript": "^1.6.0",
     "webpack": "^1.10.2"
   },
   "devDependencies": {

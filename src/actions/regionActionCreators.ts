@@ -16,7 +16,7 @@ export default function regionActionsService($ngRedux, $q: ng.IQService): IRegio
     filterRegions: searchTerm => createAction(types.FILTER_REGIONS, searchTerm),
     toggleRegion: regionId => createAction(types.TOGGLE_REGION, regionId)
   };
-  return redux.bindActionCreators(actionCreator, $ngRedux.getStore().dispatch);
+  return redux.bindActionCreators(actionCreator, $ngRedux.dispatch);
 }
 
 function fakeHttpCall( $q: ng.IQService): ng.IPromise<any> {
