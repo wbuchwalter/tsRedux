@@ -20,9 +20,11 @@ class RegionListerController {
   visibleRegionIds: string[] = [];
 
   constructor($ngRedux, private regionActions: IRegionActionCreator) {
-    $ngRedux.connect(state => state.regions.regionMap, regionMap => this.regionMap = regionMap);
-    $ngRedux.connect(state => state.regionsVisualProperties.map, regionUIMap => this.regionUIMap = regionUIMap);
-    $ngRedux.connect(matchingRegionsSelector, this.onMatchingRegionsChanged.bind(this));
+      $ngRedux.connect(state => ({
+          regionMap: state.regions.regionMap,
+          regionUIMap: state.regionsVisualProperties.map,
+          matchingRegionIds: matchingRegionsSelector(state)
+      }))(this.onSelectedStateChanged.bind(this));
   }
 
   getRegion = id => this.regionMap[id];
@@ -44,10 +46,12 @@ class RegionListerController {
       : true;
   }
 
-  onMatchingRegionsChanged(matchingRegionIds: string[]) {
+  onSelectedStateChanged(selectedState) {
+    this.regionMap = selectedState.regionMap;
+    this.regionUIMap = selectedState.regionUIMap;
     //we don't want to just show the matching regions, we want to show their full hierarchy
     this.visibleRegionIds.length = 0;
-    _.forEach(matchingRegionIds, id => this.addHierarchy(id, this.visibleRegionIds))
+    _.forEach(selectedState.matchingRegionIds, id => this.addHierarchy(id, this.visibleRegionIds))
   }
 
 
